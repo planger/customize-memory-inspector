@@ -1,0 +1,53 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../OpenSource/cdt-cloud/vscode-memory-inspector"
+		}
+	],
+	"settings": {},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch Customization Extension",
+				"type": "extensionHost",
+				"request": "launch",
+				"runtimeExecutable": "${execPath}",
+				"args": [
+					"--extensionDevelopmentPath=${workspaceFolder:customize-memory-inspector}",
+					"--extensionDevelopmentPath=${workspaceFolder:vscode-memory-inspector}"
+				],
+				"outFiles": [
+					"${workspaceFolder:customize-memory-inspector}/out/**/*.js",
+					"${workspaceFolder:vscode-memory-inspector}/dist/**/*.js"
+				]
+			},
+			{
+				"name": "Launch Memory Inspector",
+				"type": "extensionHost",
+				"request": "launch",
+				"runtimeExecutable": "${execPath}",
+				"args": [
+					"--extensionDevelopmentPath=${workspaceFolder:vscode-memory-inspector}",
+					"--extensionDevelopmentPath=${workspaceFolder:customize-memory-inspector}",
+				],
+				"outFiles": [
+					"${workspaceFolder:vscode-memory-inspector}/dist/**/*.js",
+					"${workspaceFolder:customize-memory-inspector}/out/**/*.js"
+				]
+			}
+		],
+		"compounds": [
+			{
+				"name": "Launch Customization and Memory Inspector",
+				"configurations": [
+					"Launch Customization Extension",
+					"Launch Memory Inspector"
+				]
+			}
+		]
+	}
+}
