@@ -7,6 +7,7 @@ declare module 'MemoryInspector' {
     getResidents?(session: vscode.DebugSession, params: DebugProtocol.ReadMemoryArguments): Promise<VariableRange[]>;
     getAddressOfVariable?(session: vscode.DebugSession, variableName: string): Promise<string | undefined>;
     getSizeOfVariable?(session: vscode.DebugSession, variableName: string): Promise<bigint | undefined>;
+    getMemoryDisplaySettings?(session: vscode.DebugSession): Promise<Partial<MemoryDisplaySettingsContribution>>;
     initializeAdapterTracker?(session: vscode.DebugSession): vscode.DebugAdapterTracker | undefined;
   }
   export interface MemoryRange {
@@ -21,5 +22,28 @@ declare module 'MemoryInspector' {
   export interface VariableRange extends MemoryRange, VariableMetadata { }
   export interface AdapterRegistry extends vscode.Disposable {
     registerAdapter(handlerToRegister: AdapterCapabilities, ...debugTypes: string[]): vscode.Disposable;
+  }
+  export interface MemoryDisplaySettings {
+    bytesPerMau: number;
+    mausPerGroup: number;
+    groupsPerRow: string;
+    endianness: string;
+    scrollingBehavior: ScrollingBehavior;
+    addressPadding: AddressPadding;
+    addressRadix: Radix;
+    showRadixPrefix: boolean;
+    visibleColumns: string[]
+  }
+  export type ScrollingBehavior = 'Paginate' | 'Grow' | 'Auto-Append';
+  export type AddressPadding = 'Min' | 0 | 32 | 64;
+  export enum Radix {
+    Binary = 2,
+    Octal = 8,
+    Decimal = 10,
+    Hexadecimal = 16,
+  }
+  export interface MemoryDisplaySettingsContribution {
+    message?: string;
+    settings?: Partial<MemoryDisplaySettings>;
   }
 }
