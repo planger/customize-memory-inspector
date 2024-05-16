@@ -54,13 +54,14 @@ export class MyPseudoVariableTracker implements AdapterCapabilities {
 	}
 	async getMemoryDisplaySettings(session: vscode.DebugSession): Promise<Partial<MemoryDisplaySettingsContribution>> {
 		return {
-			message: 'Hello from MyPseudoVariableTracker',
+			message: 'Uses Arm Debugger defaults.',
 			settings: {
-				bytesPerMau: 8,
-				mausPerGroup: 4,
+				bytesPerMau: 2,
+				mausPerGroup: 2,
 				endianness: 'Big Endian',
 				addressPadding: 64,
-				visibleColumns: ['ascii']
+				groupsPerRow: 'Autofit',
+				visibleColumns: ['variables']
 			}
 		};
 	}
